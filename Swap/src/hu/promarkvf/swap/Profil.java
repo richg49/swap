@@ -9,22 +9,25 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 
 public class Profil {
-	private int    id;
-	private int    user_id;
-	private String UUID;
-	private String email;
-	private String facebook;
-	private String google;
-	private String address_city;
-	private String address_street;
-	private String address_postcode;
-	private float  gps_lat;
-	private float  gps_long;
-	private String name;
-	private String gmap;
+	final static String PROFIL_IR_ULR = SwapActivity.WEB_SERVICE_ULR + "profil_ir.php";
+	private int         id;
+	private int         user_id;
+	private String      UUID;
+	private String      email;
+	private String      facebook;
+	private String      google;
+	private String      address_city;
+	private String      address_street;
+	private String      address_postcode;
+	private float       gps_lat;
+	private float       gps_long;
+	private String      name;
+	private String      rname;
+	private String      gmap;
 	
-	protected Profil(String email, String facebook, String google, String address_city, String address_street, String address_postcode, String name, String gmap) {
+	protected Profil(String email, String facebook, String google, String address_city, String address_street, String address_postcode, String name, String rname, String gmap, Float gps_lat, Float gps_long) {
 		super();
+		this.UUID = SetAppId.id(SwapActivity.maincontext);
 		this.email = email;
 		this.facebook = facebook;
 		this.google = google;
@@ -32,19 +35,26 @@ public class Profil {
 		this.address_street = address_street;
 		this.address_postcode = address_postcode;
 		this.name = name;
+		this.rname = rname;
 		this.gmap = gmap;
+		this.gps_lat = gps_lat;
+		this.gps_long = gps_long;
 	}
 	
 	protected Profil() {
 		super();
-		this.email = null;
-		this.facebook = null;
-		this.google = null;
-		this.address_city = null;
-		this.address_street = null;
-		this.address_postcode = null;
-		this.name = null;
-		this.gmap = null;
+		this.UUID = SetAppId.id(SwapActivity.maincontext);
+		this.email = "";
+		this.facebook = "";
+		this.google = "";
+		this.address_city = "";
+		this.address_street = "";
+		this.address_postcode = "";
+		this.name = "";
+		this.rname = "";
+		this.gmap = "";
+		this.gps_lat = 0f;
+		this.gps_long = 0f;
 	}
 	
 	public boolean SaveDb() {
@@ -56,26 +66,26 @@ public class Profil {
 				
 				@Override
 				protected void onPostExecute(String result) {
-					progressDialog.dismiss();
+					this.progressDialog.dismiss();
 					if (result != null) {
-						JSONObject json= new JSONObject();;
-                        try {
-	                        json = new JSONObject(result);
-                        } catch (JSONException e) {
-	                        e.printStackTrace();
-                        }
-						FromJson(json);
+						JSONObject json = new JSONObject();;
+						try {
+							json = new JSONObject(result);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						Profil.this.FromJson(json);
 					}
 				}
 				
 				@Override
 				protected void onPreExecute() {
-					progressDialog = new ProgressDialog(SwapActivity.maincontext);
-					progressDialog.setMessage("Kérem várjon...");
-					progressDialog.show();
+					this.progressDialog = new ProgressDialog(SwapActivity.maincontext);
+					this.progressDialog.setMessage("Kérem várjon...");
+					this.progressDialog.show();
 				}
 				
-			}.execute("webservice_kezelesid.php", "json=" + json);
+			}.execute(PROFIL_IR_ULR, "json=" + json);
 		}
 		return ret;
 	}
@@ -84,6 +94,7 @@ public class Profil {
 		JSONObject json;
 		json = new JSONObject();
 		try {
+			json.put("UUID", URLEncoder.encode(this.UUID, "UTF-8"));
 			json.put("email", URLEncoder.encode(this.email, "UTF-8"));
 			json.put("facebook", URLEncoder.encode(this.facebook, "UTF-8"));
 			json.put("google", URLEncoder.encode(this.google, "UTF-8"));
@@ -93,6 +104,7 @@ public class Profil {
 			json.put("gps_lat", this.gps_lat);
 			json.put("gps_long", this.gps_long);
 			json.put("name", URLEncoder.encode(this.name, "UTF-8"));
+			json.put("rname", URLEncoder.encode(this.rname, "UTF-8"));
 			json.put("gmap", URLEncoder.encode(this.gmap, "UTF-8"));
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -103,9 +115,9 @@ public class Profil {
 	}
 	
 	private void FromJson(JSONObject json) {
-		if ( !json.isNull("id") ) {
+		if (!json.isNull("id")) {
 			try {
-	            this.id = json.getInt("id");
+				this.id = json.getInt("id");
 				this.user_id = json.getInt("user_id");
 				this.UUID = json.getString("UUID");
 				this.email = json.getString("email");
@@ -117,12 +129,13 @@ public class Profil {
 				this.gps_lat = json.getLong("gps_lat");
 				this.gps_long = json.getLong("gps_long");
 				this.name = json.getString("name");
+				this.rname = json.getString("rname");
 				this.gmap = json.getString("gmap");
-            } catch (JSONException e) {
-	            e.printStackTrace();
-            }
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
-
+		
 	}
 	
 	private void setId(int value) {
@@ -130,11 +143,11 @@ public class Profil {
 	}
 	
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	
 	public int getORMID() {
-		return getId();
+		return this.getId();
 	}
 	
 	public void setUser_id(int value) {
@@ -142,7 +155,7 @@ public class Profil {
 	}
 	
 	public int getUser_id() {
-		return user_id;
+		return this.user_id;
 	}
 	
 	public void setUUID(String value) {
@@ -150,7 +163,7 @@ public class Profil {
 	}
 	
 	public String getUUID() {
-		return UUID;
+		return this.UUID;
 	}
 	
 	public void setEmail(String value) {
@@ -158,7 +171,7 @@ public class Profil {
 	}
 	
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 	
 	public void setFacebook(String value) {
@@ -166,7 +179,7 @@ public class Profil {
 	}
 	
 	public String getFacebook() {
-		return facebook;
+		return this.facebook;
 	}
 	
 	public void setGoogle(String value) {
@@ -174,7 +187,7 @@ public class Profil {
 	}
 	
 	public String getGoogle() {
-		return google;
+		return this.google;
 	}
 	
 	public void setAddress_city(String value) {
@@ -182,7 +195,7 @@ public class Profil {
 	}
 	
 	public String getAddress_city() {
-		return address_city;
+		return this.address_city;
 	}
 	
 	public void setAddress_street(String value) {
@@ -190,7 +203,7 @@ public class Profil {
 	}
 	
 	public String getAddress_street() {
-		return address_street;
+		return this.address_street;
 	}
 	
 	public void setAddress_postcode(String value) {
@@ -198,7 +211,7 @@ public class Profil {
 	}
 	
 	public String getAddress_postcode() {
-		return address_postcode;
+		return this.address_postcode;
 	}
 	
 	public void setGps_lat(float value) {
@@ -206,7 +219,7 @@ public class Profil {
 	}
 	
 	public float getGps_lat() {
-		return gps_lat;
+		return this.gps_lat;
 	}
 	
 	public void setGps_long(float value) {
@@ -214,7 +227,7 @@ public class Profil {
 	}
 	
 	public float getGps_long() {
-		return gps_long;
+		return this.gps_long;
 	}
 	
 	public void setName(String value) {
@@ -222,7 +235,7 @@ public class Profil {
 	}
 	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
 	public void setGmap(String value) {
@@ -230,7 +243,23 @@ public class Profil {
 	}
 	
 	public String getGmap() {
-		return gmap;
+		return this.gmap;
 	}
+	
+	public final String getRname() {
+		return rname;
+	}
+	
+	public final void setRname(String rname) {
+		this.rname = rname;
+	}
+	
+	public void setGps_long(String strlong) {
+		this.gps_long = Float.valueOf(strlong);
+	}
+
+	public void setGps_lat(String strlat) {
+		this.gps_lat = Float.valueOf(strlat);
+    }
 	
 }

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.ProgressDialog;
@@ -17,66 +19,53 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class DataBase extends AsyncTask<String, Integer, String> {
-	private Context context = null;
+	private Context        context        = null;
 	private ProgressDialog progressDialog = null;
-	private long responseLength;
-	private static String JSONUlr;
-
+	private long           responseLength;
+	
 	public DataBase(Context context) {
 		super();
 		this.context = context;
 	}
-
+	
 	@Override
 	protected String doInBackground(String... params) {
-		AndroidHttpClient httpClient = null;
+		HttpClient httpClient = null;
 		String resp = null;
 		List<NameValuePair> nameValuePairs = null;
-		if ( params.length > 0 ) {
+		if (params.length > 0) {
 			try {
-				httpClient = AndroidHttpClient.newInstance("Android");
-				HttpPost httppost = new HttpPost(JSONUlr + params[0]);
-				for ( String param : params ) {
+				httpClient =new DefaultHttpClient();
+				HttpPost httppost = new HttpPost(params[0]);
+				for (String param : params) {
 					String[] posts = param.split("=");
-					if ( posts.length > 1 ) {
+					if (posts.length > 1) {
 						nameValuePairs = new ArrayList<NameValuePair>(2);
 						nameValuePairs.add(new BasicNameValuePair(posts[0], posts[1]));
 					}
 				}
-				if ( nameValuePairs != null ) {
+				if (nameValuePairs != null) {
 					httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				}
 				resp = httpClient.execute(httppost, new BasicResponseHandler());
-
-			}
-			catch ( IOException e ) {
+				System.out.println(resp);
+			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			finally {
-				if ( httpClient != null ) {
-					httpClient.close();
+			} finally {
+				if (httpClient != null) {
+//					httpClient.close();
 				}
 			}
 		}
 		return resp;
 	}
-
+	
 	@Override
 	protected void onProgressUpdate(Integer... values) {
 		double percent = 0;
-		if ( responseLength != 0 ) {
+		if (responseLength != 0) {
 			percent = 100 * values[0] / responseLength;
 		}
 		Log.d("AsyncTask progress", "" + percent + " %");
 	}
-
-	public DataBase(String jSONUlr) {
-		super();
-		JSONUlr = jSONUlr;
-	}
-
-	public static final void setJSONUlr(String jSONUlr) {
-		JSONUlr = jSONUlr;
-	}
-
 }
