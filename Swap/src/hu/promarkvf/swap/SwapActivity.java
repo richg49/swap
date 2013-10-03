@@ -1,9 +1,13 @@
 package hu.promarkvf.swap;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +38,8 @@ public class SwapActivity extends Activity {
 		btnProfil.setOnClickListener(profilClick);
 		
 		appID = new SetAppId();
+		loadPref();
+		System.out.println(appID.toString());
 	}
 	
 	@Override
@@ -67,6 +73,38 @@ public class SwapActivity extends Activity {
 		
 		}
 		
+	}
+	
+	/*
+	 * Beállítások betöltése
+	 */
+	private void loadPref() {
+		SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SwapActivity.profil.setEmail(mySharedPreferences.getString("prefemail", ""));
+		SwapActivity.profil.setName(mySharedPreferences.getString("prefname", ""));
+		SwapActivity.profil.setRname(mySharedPreferences.getString("prefrname", ""));
+		SwapActivity.profil.setAddress_postcode(mySharedPreferences.getString("prefaddress_postcode", ""));
+		SwapActivity.profil.setAddress_city(mySharedPreferences.getString("prefaddress_city", ""));
+		SwapActivity.profil.setAddress_street(mySharedPreferences.getString("prefaddress_streat", ""));
+		SwapActivity.profil.setGps_long(mySharedPreferences.getString("preflong", "0.0"));
+		SwapActivity.profil.setGps_lat(mySharedPreferences.getString("preflat", "0.0"));
+		Profil dbProfil = new Profil();
+		dbProfil.setUUID(SwapActivity.profil.getUUID());
+		dbProfil.setEmail(SwapActivity.profil.getEmail());
+		dbProfil.ReadDb();
+		System.out.println(dbProfil.getEmail());
+	}
+	
+	/*
+	 * Internet ellenőrzése
+	 */
+	public boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 	
 }

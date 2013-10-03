@@ -9,7 +9,8 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 
 public class Profil {
-	final static String PROFIL_IR_ULR = SwapActivity.WEB_SERVICE_ULR + "profil_ir.php";
+	final static String PROFIL_IR_ULR  = SwapActivity.WEB_SERVICE_ULR + "profil_ir.php";
+	final static String PROFIL_OLV_ULR = SwapActivity.WEB_SERVICE_ULR + "profil_olv.php";
 	private int         id;
 	private int         user_id;
 	private String      UUID;
@@ -24,8 +25,10 @@ public class Profil {
 	private String      name;
 	private String      rname;
 	private String      gmap;
+	private String      language;
 	
-	protected Profil(String email, String facebook, String google, String address_city, String address_street, String address_postcode, String name, String rname, String gmap, Float gps_lat, Float gps_long) {
+	protected Profil(String email, String facebook, String google, String address_city, String address_street, String address_postcode, String name, String rname, String gmap,
+	        Float gps_lat, Float gps_long, String language) {
 		super();
 		this.UUID = SetAppId.id(SwapActivity.maincontext);
 		this.email = email;
@@ -39,6 +42,7 @@ public class Profil {
 		this.gmap = gmap;
 		this.gps_lat = gps_lat;
 		this.gps_long = gps_long;
+		this.language = language;
 	}
 	
 	protected Profil() {
@@ -55,6 +59,7 @@ public class Profil {
 		this.gmap = "";
 		this.gps_lat = 0f;
 		this.gps_long = 0f;
+		this.language = "HU";
 	}
 	
 	public boolean SaveDb() {
@@ -68,13 +73,7 @@ public class Profil {
 				protected void onPostExecute(String result) {
 					this.progressDialog.dismiss();
 					if (result != null) {
-						JSONObject json = new JSONObject();;
-						try {
-							json = new JSONObject(result);
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						Profil.this.FromJson(json);
+						System.out.println(result);
 					}
 				}
 				
@@ -86,6 +85,33 @@ public class Profil {
 				}
 				
 			}.execute(PROFIL_IR_ULR, "json=" + json);
+		}
+		return ret;
+	}
+	
+	public boolean ReadDb() {
+		boolean ret = false;
+		JSONObject json = this.ToJson();
+		if (this.UUID != "" || this.email != "") {
+			new DataBase(SwapActivity.maincontext) {
+				private ProgressDialog progressDialog = null;
+				
+				@Override
+				protected void onPostExecute(String result) {
+					this.progressDialog.dismiss();
+					if (result != null) {
+						FromJson(result);
+					}
+				}
+				
+				@Override
+				protected void onPreExecute() {
+					this.progressDialog = new ProgressDialog(SwapActivity.maincontext);
+					this.progressDialog.setMessage("Kérem várjon...");
+					this.progressDialog.show();
+				}
+				
+			}.execute(PROFIL_OLV_ULR, "uuid=" + this.UUID + ", email=" + this.email);
 		}
 		return ret;
 	}
@@ -106,6 +132,7 @@ public class Profil {
 			json.put("name", URLEncoder.encode(this.name, "UTF-8"));
 			json.put("rname", URLEncoder.encode(this.rname, "UTF-8"));
 			json.put("gmap", URLEncoder.encode(this.gmap, "UTF-8"));
+			json.put("language", URLEncoder.encode(this.language, "UTF-8"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -114,28 +141,34 @@ public class Profil {
 		return json;
 	}
 	
-	private void FromJson(JSONObject json) {
-		if (!json.isNull("id")) {
-			try {
-				this.id = json.getInt("id");
-				this.user_id = json.getInt("user_id");
-				this.UUID = json.getString("UUID");
-				this.email = json.getString("email");
-				this.facebook = json.getString("facebook");
-				this.google = json.getString("google");
-				this.address_city = json.getString("address_city");
-				this.address_street = json.getString("address_street");
-				this.address_postcode = json.getString("address_postcode");
-				this.gps_lat = json.getLong("gps_lat");
-				this.gps_long = json.getLong("gps_long");
-				this.name = json.getString("name");
-				this.rname = json.getString("rname");
-				this.gmap = json.getString("gmap");
-			} catch (JSONException e) {
-				e.printStackTrace();
+	private void FromJson(String jsonstr) {
+		JSONObject json;
+		try {
+			json = new JSONObject(jsonstr);
+			if (!json.isNull("id")) {
+				try {
+					this.id = json.getInt("id");
+					this.user_id = json.getInt("user_id");
+					this.UUID = json.getString("UUID");
+					this.email = json.getString("email");
+					this.facebook = json.getString("facebook");
+					this.google = json.getString("google");
+					this.address_city = json.getString("address_city");
+					this.address_street = json.getString("address_street");
+					this.address_postcode = json.getString("address_postcode");
+					this.gps_lat = json.getLong("gps_lat");
+					this.gps_long = json.getLong("gps_long");
+					this.name = json.getString("name");
+					this.rname = json.getString("rname");
+					this.gmap = json.getString("gmap");
+					this.language = json.getString("language");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		
 	}
 	
 	private void setId(int value) {
@@ -255,11 +288,27 @@ public class Profil {
 	}
 	
 	public void setGps_long(String strlong) {
-		this.gps_long = Float.valueOf(strlong);
+		try {
+			this.gps_long = Float.valueOf(strlong);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 	}
-
+	
 	public void setGps_lat(String strlat) {
-		this.gps_lat = Float.valueOf(strlat);
-    }
+		try {
+			this.gps_lat = Float.valueOf(strlat);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public final String getLanguage() {
+		return language;
+	}
+	
+	public final void setLanguage(String language) {
+		this.language = language;
+	}
 	
 }
