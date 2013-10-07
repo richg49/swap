@@ -2,8 +2,13 @@
 <resources>
 
     <string name="app_name">Swap</string>
-    <string name="action_settings">Settings</string>
+    <string name="profil_settings">Profil</string>
     <string name="btn_profil">Profil</string>
+    <string name="btn_keres">Keres</string>
+    <string name="btn_kinal">Kínál</string>
+    <string name="btn_partner">Partnerek</string>
+    <string name="btn_kivansag">Kivánság</string>
+    <string name="btn_kereses">Keresés</string>
     <string name="profil">profil</string>
     <string name="email">EMail</string>
     <string name="required">Kötelező</string>
@@ -17,5 +22,10 @@
     <string name="mappositiom">Pozició</string>
     <string name="maplong">Long</string>
     <string name="maplat">Lat</string>
+    <string name="tvProfilStatus">Profil állapot:</string>
+    <string name="tvProfilStatusOn">Aktív</string>
+    <string name="tvProfilStatusOff">Inaktív</string>
+    <string name="tvgyujtemenyek">Gyűjtemények</string>
+    <string name="sb_valassz">Válassz</string>
 
 </resources>

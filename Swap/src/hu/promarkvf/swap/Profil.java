@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.bool;
 import android.app.ProgressDialog;
 
 public class Profil {
@@ -26,6 +27,7 @@ public class Profil {
 	private String      rname;
 	private String      gmap;
 	private String      language;
+	private String      activation;
 	
 	protected Profil(String email, String facebook, String google, String address_city, String address_street, String address_postcode, String name, String rname, String gmap,
 	        Float gps_lat, Float gps_long, String language) {
@@ -43,6 +45,7 @@ public class Profil {
 		this.gps_lat = gps_lat;
 		this.gps_long = gps_long;
 		this.language = language;
+		this.activation = "N";
 	}
 	
 	protected Profil() {
@@ -60,6 +63,7 @@ public class Profil {
 		this.gps_lat = 0f;
 		this.gps_long = 0f;
 		this.language = "HU";
+		this.activation = "N";
 	}
 	
 	public boolean SaveDb() {
@@ -91,7 +95,6 @@ public class Profil {
 	
 	public boolean ReadDb() {
 		boolean ret = false;
-		JSONObject json = this.ToJson();
 		if (this.UUID != "" || this.email != "") {
 			new DataBase(SwapActivity.maincontext) {
 				private ProgressDialog progressDialog = null;
@@ -111,7 +114,7 @@ public class Profil {
 					this.progressDialog.show();
 				}
 				
-			}.execute(PROFIL_OLV_ULR, "uuid=" + this.UUID + ", email=" + this.email);
+			}.execute(PROFIL_OLV_ULR, "uuid=" + this.UUID, "email=" + this.email);
 		}
 		return ret;
 	}
@@ -145,10 +148,10 @@ public class Profil {
 		JSONObject json;
 		try {
 			json = new JSONObject(jsonstr);
-			if (!json.isNull("id")) {
+			if (!json.isNull("UUID")) {
 				try {
-					this.id = json.getInt("id");
-					this.user_id = json.getInt("user_id");
+					// this.id = json.getInt("id");
+					// this.user_id = json.getInt("user_id");
 					this.UUID = json.getString("UUID");
 					this.email = json.getString("email");
 					this.facebook = json.getString("facebook");
@@ -162,6 +165,7 @@ public class Profil {
 					this.rname = json.getString("rname");
 					this.gmap = json.getString("gmap");
 					this.language = json.getString("language");
+					this.activation = json.getString("activation");
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -311,4 +315,12 @@ public class Profil {
 		this.language = language;
 	}
 	
+	public boolean isActivated() {
+		if (this.activation.length() == 0) {
+			return true;
+		} else {
+			this.ReadDb();
+			return false;
+		}
+	}
 }

@@ -35,16 +35,16 @@ public class DataBase extends AsyncTask<String, Integer, String> {
 		List<NameValuePair> nameValuePairs = null;
 		if (params.length > 0) {
 			try {
-				httpClient =new DefaultHttpClient();
+				httpClient = new DefaultHttpClient();
 				HttpPost httppost = new HttpPost(params[0]);
+				nameValuePairs = new ArrayList<NameValuePair>(2);
 				for (String param : params) {
 					String[] posts = param.split("=");
 					if (posts.length > 1) {
-						nameValuePairs = new ArrayList<NameValuePair>(2);
 						nameValuePairs.add(new BasicNameValuePair(posts[0], posts[1]));
 					}
 				}
-				if (nameValuePairs != null) {
+				if (nameValuePairs.size() > 0) {
 					httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				}
 				resp = httpClient.execute(httppost, new BasicResponseHandler());
@@ -53,7 +53,7 @@ public class DataBase extends AsyncTask<String, Integer, String> {
 				e.printStackTrace();
 			} finally {
 				if (httpClient != null) {
-//					httpClient.close();
+					// httpClient.close();
 				}
 			}
 		}
