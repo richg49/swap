@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.bool;
 import android.app.ProgressDialog;
 
 public class Profil {
@@ -84,7 +83,7 @@ public class Profil {
 				@Override
 				protected void onPreExecute() {
 					this.progressDialog = new ProgressDialog(SwapActivity.maincontext);
-					this.progressDialog.setMessage("Kérem várjon...");
+					this.progressDialog.setMessage(SwapActivity.maincontext.getText(R.string.assync_msg));
 					this.progressDialog.show();
 				}
 				
@@ -110,7 +109,7 @@ public class Profil {
 				@Override
 				protected void onPreExecute() {
 					this.progressDialog = new ProgressDialog(SwapActivity.maincontext);
-					this.progressDialog.setMessage("Kérem várjon...");
+					this.progressDialog.setMessage(SwapActivity.maincontext.getText(R.string.assync_msg));
 					this.progressDialog.show();
 				}
 				

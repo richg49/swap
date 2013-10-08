@@ -34,6 +34,10 @@
             android:name="hu.promarkvf.swap.ProfilSetActivity"
             android:label="@string/title_activity_profil_set" >
         </activity>
+        <activity
+            android:name="hu.promarkvf.swap.ProductBuyActivity"
+            android:label="@string/title_activity_product_buy" >
+        </activity>
     </application>
 
 </manifest>

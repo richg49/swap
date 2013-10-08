@@ -27,5 +27,8 @@
     <string name="tvProfilStatusOff">Inaktív</string>
     <string name="tvgyujtemenyek">Gyűjtemények</string>
     <string name="sb_valassz">Válassz</string>
-
+    <string name="title_activity_product_buy">Választható gyűjtemények</string>
+    <string name="product_buy">Feliratkozás gyűjteményre</string>
+    <string name="assync_msg">Kérem várjon...</string>
+    <string name="elofizetes">Előfizetés</string>
 </resources>
