@@ -14,7 +14,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -48,7 +47,7 @@ public class DataBase extends AsyncTask<String, Integer, String> {
 					httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				}
 				resp = httpClient.execute(httppost, new BasicResponseHandler());
-				System.out.println(resp);
+				// System.out.println(resp);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {

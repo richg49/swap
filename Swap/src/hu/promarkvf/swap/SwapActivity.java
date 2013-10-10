@@ -1,5 +1,6 @@
 package hu.promarkvf.swap;
 
+import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,11 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class SwapActivity extends Activity {
 	public final static String WEB_SERVICE_ULR = "http://swap.promarkvf.hu/swap/web_service/";
+	static SimpleDateFormat    dateFormat      = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	static SimpleDateFormat    dateFormat_smal = new SimpleDateFormat("yyyy-MM-dd");
 	private static final int   RESULT_SETTINGS = 1;
 	static Context             maincontext;
 	static SetAppId            appID;
@@ -29,6 +34,8 @@ public class SwapActivity extends Activity {
 	static TextView            tvProfil        = null;
 	TimerTask                  idoTask_fo;
 	static ProductGroups       pgs;
+	Spinner                    spinner_gyujt;
+	ArrayAdapter<String>       aa_gyujt        = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +60,9 @@ public class SwapActivity extends Activity {
 		pgs = new ProductGroups();
 		pgs.ReadDb(maincontext);
 		
+		spinner_gyujt = (Spinner) findViewById(R.id.spinner_gyujt);
+		
 		this.idoTask_fo = this.idofut_socket();
-		// status sor időzítése
-		/*
-		 * ScheduledExecutorService scheduler =
-		 * Executors.newSingleThreadScheduledExecutor();
-		 * 
-		 * scheduler.scheduleAtFixedRate(new Runnable() { public void run() {
-		 * int m = 0; Toast.makeText(maincontext, String.valueOf(m++),
-		 * Toast.LENGTH_LONG).show(); } }, 10, 10, TimeUnit.SECONDS);
-		 */
 	}
 	
 	@Override
@@ -119,7 +119,7 @@ public class SwapActivity extends Activity {
 		dbProfil.setUUID(SwapActivity.profil.getUUID());
 		dbProfil.setEmail(SwapActivity.profil.getEmail());
 		dbProfil.ReadDb();
-		System.out.println(dbProfil.getEmail());
+		// System.out.println(dbProfil.getEmail());
 	}
 	
 	/*
@@ -147,6 +147,11 @@ public class SwapActivity extends Activity {
 							SwapActivity.tvProfil.setText(SwapActivity.this.getText(R.string.tvProfilStatusOn));
 						} else {
 							SwapActivity.tvProfil.setText(SwapActivity.this.getText(R.string.tvProfilStatusOff));
+						}
+						if (aa_gyujt == null && pgs.descriptions != null) {
+							aa_gyujt = new ArrayAdapter<String>(SwapActivity.maincontext, android.R.layout.simple_spinner_item, pgs.descriptions);
+							spinner_gyujt.setAdapter(aa_gyujt);
+							spinner_gyujt.invalidate();
 						}
 					};// --
 				});// --

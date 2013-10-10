@@ -118,10 +118,11 @@ public class Profil {
 		return ret;
 	}
 	
-	private JSONObject ToJson() {
+	public JSONObject ToJson() {
 		JSONObject json;
 		json = new JSONObject();
 		try {
+			json.put("id", this.id);
 			json.put("UUID", URLEncoder.encode(this.UUID, "UTF-8"));
 			json.put("email", URLEncoder.encode(this.email, "UTF-8"));
 			json.put("facebook", URLEncoder.encode(this.facebook, "UTF-8"));
@@ -149,7 +150,7 @@ public class Profil {
 			json = new JSONObject(jsonstr);
 			if (!json.isNull("UUID")) {
 				try {
-					// this.id = json.getInt("id");
+					this.id = json.getInt("id");
 					// this.user_id = json.getInt("user_id");
 					this.UUID = json.getString("UUID");
 					this.email = json.getString("email");

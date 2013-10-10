@@ -38,6 +38,10 @@
             android:name="hu.promarkvf.swap.ProductBuyActivity"
             android:label="@string/title_activity_product_buy" >
         </activity>
+        <activity
+            android:name="hu.promarkvf.swap.VerifyBuyActivity"
+            android:label="@string/title_activity_verify_buy" >
+        </activity>
     </application>
 
 </manifest>
