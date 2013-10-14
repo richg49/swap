@@ -5,11 +5,11 @@ public class GoogleMap {
 	private float lat;
 	private int zoom;
 	private String address;
-
+	
 	public GoogleMap() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public GoogleMap(float lon, float lat, int zoom) {
 		super();
 		this.lon = lon;
@@ -17,7 +17,7 @@ public class GoogleMap {
 		this.zoom = zoom;
 		this.address = null;
 	}
-
+	
 	public GoogleMap(String pos) {
 		super();
 		String[] sp = pos.split("[(),:]");
@@ -28,17 +28,17 @@ public class GoogleMap {
 		}
 		this.address = null;
 	}
-
+	
 	public final float getLon() {
-		return lon;
+		return this.lon;
 	}
-
+	
 	public final float getLat() {
-		return lat;
+		return this.lat;
 	}
-
+	
 	public final String getAddress() {
-		return address;
+		return this.address;
 	}
-
+	
 }

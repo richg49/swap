@@ -4,7 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,20 +26,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class SwapActivity extends Activity {
-	public final static String WEB_SERVICE_ULR = "http://swap.promarkvf.hu/swap/web_service/";
-	static SimpleDateFormat    dateFormat      = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	static SimpleDateFormat    dateFormat_smal = new SimpleDateFormat("yyyy-MM-dd");
-	private static final int   RESULT_SETTINGS = 1;
+	public final static String WEB_SERVICE_ULR              = "http://swap.promarkvf.hu/swap/web_service/";
+	final static String        START_OLV_ULR                = SwapActivity.WEB_SERVICE_ULR + "start_olv.php";
+	protected static final int SETTING_ACTIVITY_ID          = 1;
+	protected static final int PRODUCTGROUP_BUY_ACTIVITY_ID = 2;
+	private static final int   RESULT_SETTINGS              = 1;
+	static SimpleDateFormat    dateFormat                   = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	static SimpleDateFormat    dateFormat_smal              = new SimpleDateFormat("yyyy-MM-dd");
 	static Context             maincontext;
 	static SetAppId            appID;
 	static Profil              profil;
 	static Profil              dbProfil;
-	static Button              btnKeres        = null;
-	static TextView            tvProfil        = null;
+	static Button              btnKeres                     = null;
+	static TextView            tvProfil                     = null;
 	TimerTask                  idoTask_fo;
 	static ProductGroups       pgs;
 	Spinner                    spinner_gyujt;
-	ArrayAdapter<String>       aa_gyujt        = null;
+	ArrayAdapter<String>       aa_gyujt                     = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +60,59 @@ public class SwapActivity extends Activity {
 		btnKeres.setOnClickListener(profilClick);
 		
 		tvProfil = (TextView) this.findViewById(R.id.tVProfil);
+		this.spinner_gyujt = (Spinner) this.findViewById(R.id.spinner_gyujt);
 		
+		pgs = new ProductGroups();
 		appID = new SetAppId();
 		this.loadPref();
 		
-		pgs = new ProductGroups();
-		pgs.ReadDb(maincontext);
+		if (profil.getUUID() != "" || profil.getEmail() != "") {
+			new DataBase(SwapActivity.maincontext) {
+				private ProgressDialog progressDialog = null;
+				
+				@Override
+				protected void onPostExecute(String result) {
+					this.progressDialog.dismiss();
+					if (result != null) {
+						JSONObject json;
+						try {
+							json = new JSONObject(result);
+							if (!json.isNull("profil")) {
+								JSONObject jsonprofil = json.getJSONObject("profil");
+								dbProfil.FromJson(jsonprofil.toString());
+								SwapActivity.tvProfil.setText(dbProfil.isActivatedString());
+							}
+							if (!json.isNull("productgroups")) {
+								JSONObject jsonpg = json.getJSONObject("productgroups");
+								pgs.FromJson(jsonpg.toString());
+								if (aa_gyujt == null && pgs.descriptions != null) {
+									aa_gyujt = new ArrayAdapter<String>(SwapActivity.maincontext, android.R.layout.simple_spinner_item, pgs.descriptions);
+									spinner_gyujt.setAdapter(aa_gyujt);
+									// SwapActivity.this.spinner_gyujt.invalidate();
+								}
+							}
+							System.out.println("ss");
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				
+				@Override
+				protected void onPreExecute() {
+					this.progressDialog = new ProgressDialog(SwapActivity.maincontext);
+					this.progressDialog.setMessage(SwapActivity.maincontext.getText(R.string.assync_msg));
+					this.progressDialog.show();
+				}
+				
+			}.execute(START_OLV_ULR, "uuid=" + profil.getUUID(), "email=" + profil.getEmail());
+		}
 		
-		spinner_gyujt = (Spinner) findViewById(R.id.spinner_gyujt);
+		// dbProfil.ReadDb();
+		// System.out.println(dbProfil.getEmail());
+		// pgs.ReadDb(maincontext);
 		
-		this.idoTask_fo = this.idofut_socket();
+		// this.idoTask_fo = this.idofut_socket();
 	}
 	
 	@Override
@@ -79,12 +129,12 @@ public class SwapActivity extends Activity {
 		
 			case R.id.action_settings:
 				i = new Intent(this, ProfilSetActivity.class);
-				this.startActivityForResult(i, RESULT_SETTINGS);
+				this.startActivityForResult(i, SETTING_ACTIVITY_ID);
 				break;
 			
 			case R.id.action_buy:
 				i = new Intent(this, ProductBuyActivity.class);
-				this.startActivityForResult(i, RESULT_SETTINGS);
+				this.startActivityForResult(i, PRODUCTGROUP_BUY_ACTIVITY_ID);
 				break;
 		}
 		
@@ -96,7 +146,11 @@ public class SwapActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {
-			case RESULT_SETTINGS:
+			case SETTING_ACTIVITY_ID:
+				break;
+			case PRODUCTGROUP_BUY_ACTIVITY_ID:
+				aa_gyujt = new ArrayAdapter<String>(SwapActivity.maincontext, android.R.layout.simple_spinner_item, pgs.descriptions);
+				spinner_gyujt.setAdapter(aa_gyujt);
 				break;
 		
 		}
@@ -116,10 +170,6 @@ public class SwapActivity extends Activity {
 		SwapActivity.profil.setAddress_street(mySharedPreferences.getString("prefaddress_streat", ""));
 		SwapActivity.profil.setGps_long(mySharedPreferences.getString("preflong", "0.0"));
 		SwapActivity.profil.setGps_lat(mySharedPreferences.getString("preflat", "0.0"));
-		dbProfil.setUUID(SwapActivity.profil.getUUID());
-		dbProfil.setEmail(SwapActivity.profil.getEmail());
-		dbProfil.ReadDb();
-		// System.out.println(dbProfil.getEmail());
 	}
 	
 	/*
@@ -148,10 +198,10 @@ public class SwapActivity extends Activity {
 						} else {
 							SwapActivity.tvProfil.setText(SwapActivity.this.getText(R.string.tvProfilStatusOff));
 						}
-						if (aa_gyujt == null && pgs.descriptions != null) {
-							aa_gyujt = new ArrayAdapter<String>(SwapActivity.maincontext, android.R.layout.simple_spinner_item, pgs.descriptions);
-							spinner_gyujt.setAdapter(aa_gyujt);
-							spinner_gyujt.invalidate();
+						if (SwapActivity.this.aa_gyujt == null && pgs.descriptions != null) {
+							SwapActivity.this.aa_gyujt = new ArrayAdapter<String>(SwapActivity.maincontext, android.R.layout.simple_spinner_item, pgs.descriptions);
+							SwapActivity.this.spinner_gyujt.setAdapter(SwapActivity.this.aa_gyujt);
+							SwapActivity.this.spinner_gyujt.invalidate();
 						}
 					};// --
 				});// --

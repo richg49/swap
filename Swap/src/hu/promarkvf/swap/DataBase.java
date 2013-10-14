@@ -62,8 +62,8 @@ public class DataBase extends AsyncTask<String, Integer, String> {
 	@Override
 	protected void onProgressUpdate(Integer... values) {
 		double percent = 0;
-		if (responseLength != 0) {
-			percent = 100 * values[0] / responseLength;
+		if (this.responseLength != 0) {
+			percent = 100 * values[0] / this.responseLength;
 		}
 		Log.d("AsyncTask progress", "" + percent + " %");
 	}

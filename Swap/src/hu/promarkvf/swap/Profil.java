@@ -102,7 +102,7 @@ public class Profil {
 				protected void onPostExecute(String result) {
 					this.progressDialog.dismiss();
 					if (result != null) {
-						FromJson(result);
+						Profil.this.FromJson(result);
 					}
 				}
 				
@@ -144,7 +144,7 @@ public class Profil {
 		return json;
 	}
 	
-	private void FromJson(String jsonstr) {
+	public void FromJson(String jsonstr) {
 		JSONObject json;
 		try {
 			json = new JSONObject(jsonstr);
@@ -284,7 +284,7 @@ public class Profil {
 	}
 	
 	public final String getRname() {
-		return rname;
+		return this.rname;
 	}
 	
 	public final void setRname(String rname) {
@@ -308,7 +308,7 @@ public class Profil {
 	}
 	
 	public final String getLanguage() {
-		return language;
+		return this.language;
 	}
 	
 	public final void setLanguage(String language) {
@@ -322,5 +322,15 @@ public class Profil {
 			this.ReadDb();
 			return false;
 		}
+	}
+	
+	public String isActivatedString() {
+		String ret = "";
+		if (this.isActivated()) {
+			ret = (String) SwapActivity.maincontext.getText(R.string.tvProfilStatusOn);
+		} else {
+			ret = (String) SwapActivity.maincontext.getText(R.string.tvProfilStatusOff);
+		}
+		return ret;
 	}
 }
