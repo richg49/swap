@@ -28,9 +28,10 @@ import android.widget.TextView;
 public class SwapActivity extends Activity {
 	public final static String WEB_SERVICE_ULR              = "http://swap.promarkvf.hu/swap/web_service/";
 	final static String        START_OLV_ULR                = SwapActivity.WEB_SERVICE_ULR + "start_olv.php";
+	private static final int   RESULT_SETTINGS              = 1;
 	protected static final int SETTING_ACTIVITY_ID          = 1;
 	protected static final int PRODUCTGROUP_BUY_ACTIVITY_ID = 2;
-	private static final int   RESULT_SETTINGS              = 1;
+	protected static final int KERES_ACTIVITY_ID            = 3;
 	static SimpleDateFormat    dateFormat                   = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static SimpleDateFormat    dateFormat_smal              = new SimpleDateFormat("yyyy-MM-dd");
 	static Context             maincontext;
@@ -38,6 +39,9 @@ public class SwapActivity extends Activity {
 	static Profil              profil;
 	static Profil              dbProfil;
 	static Button              btnKeres                     = null;
+	static Button              btnKinal                     = null;
+	static Button              btnPartner                   = null;
+	static Button              btnKivansag                  = null;
 	static TextView            tvProfil                     = null;
 	TimerTask                  idoTask_fo;
 	static ProductGroups       pgs;
@@ -55,6 +59,9 @@ public class SwapActivity extends Activity {
 		OnClickListener profilClick = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Intent i = null;
+				i = new Intent(SwapActivity.maincontext, KeresActivity.class);
+				startActivityForResult(i, KERES_ACTIVITY_ID);
 			}
 		};
 		btnKeres.setOnClickListener(profilClick);
@@ -81,6 +88,8 @@ public class SwapActivity extends Activity {
 								JSONObject jsonprofil = json.getJSONObject("profil");
 								dbProfil.FromJson(jsonprofil.toString());
 								SwapActivity.tvProfil.setText(dbProfil.isActivatedString());
+							} else {
+								SwapActivity.tvProfil.setText(getText(R.string.tvProfilStatusEmpty));
 							}
 							if (!json.isNull("productgroups")) {
 								JSONObject jsonpg = json.getJSONObject("productgroups");

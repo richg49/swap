@@ -3,7 +3,7 @@
 
     <string name="app_name">Swap</string>
     <string name="profil_settings">Profil</string>
-    <string name="btn_profil">Profil</string>
+    <string name="btn_profil">Profil</string> 
     <string name="btn_keres">Keres</string>
     <string name="btn_kinal">Kínál</string>
     <string name="btn_partner">Partnerek</string>
@@ -25,6 +25,7 @@
     <string name="tvProfilStatus">Profil állapot:</string>
     <string name="tvProfilStatusOn">Aktív</string>
     <string name="tvProfilStatusOff">Inaktív</string>
+    <string name="tvProfilStatusEmpty">Nincs profil</string>
     <string name="tvgyujtemenyek">Gyűjtemények </string>
     <string name="sb_valassz">Válassz</string>
     <string name="title_activity_product_buy">Választható gyűjtemények</string>
@@ -36,5 +37,7 @@
     <string name="btn_elofizet">Előfizetés</string>
     <string name="btn_kilep">Kilép</string>
     <string name="title_activity_verify_buy">Vásárlás</string>
- 
+    <string name="title_activity_keres">KeresActivity</string>
+   <string name="description_zoom_touch_close">Érintésre bezár</string>
+
 </resources>

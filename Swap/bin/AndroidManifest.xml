@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -41,6 +41,10 @@
         <activity
             android:name="hu.promarkvf.swap.VerifyBuyActivity"
             android:label="@string/title_activity_verify_buy" >
+        </activity>
+        <activity
+            android:name="hu.promarkvf.swap.KeresActivity"
+            android:label="@string/title_activity_keres" >
         </activity>
     </application>
 
