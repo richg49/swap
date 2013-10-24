@@ -3,12 +3,13 @@
 
     <string name="app_name">Swap</string>
     <string name="profil_settings">Profil</string>
-    <string name="btn_profil">Profil</string> 
+    <string name="btn_profil">Profil</string>
     <string name="btn_keres">Keres</string>
     <string name="btn_kinal">Kínál</string>
     <string name="btn_partner">Partnerek</string>
     <string name="btn_kivansag">Kivánság</string>
     <string name="btn_kereses">Keresés</string>
+    <string name="btn_kezel">Kezel</string>
     <string name="profil">profil</string>
     <string name="email">EMail</string>
     <string name="required">Kötelező</string>
@@ -26,7 +27,8 @@
     <string name="tvProfilStatusOn">Aktív</string>
     <string name="tvProfilStatusOff">Inaktív</string>
     <string name="tvProfilStatusEmpty">Nincs profil</string>
-    <string name="tvgyujtemenyek">Gyűjtemények </string>
+    <string name="profilinaktiv_msg">A profil még nincs aktiválva!</string>
+    <string name="tvgyujtemenyek">Gyűjtemény: </string>
     <string name="sb_valassz">Válassz</string>
     <string name="title_activity_product_buy">Választható gyűjtemények</string>
     <string name="product_buy">Feliratkozás gyűjteményre</string>
@@ -38,6 +40,28 @@
     <string name="btn_kilep">Kilép</string>
     <string name="title_activity_verify_buy">Vásárlás</string>
     <string name="title_activity_keres">KeresActivity</string>
-   <string name="description_zoom_touch_close">Érintésre bezár</string>
+    <string name="description_zoom_touch_close">Érintésre bezár</string>
+    <string name="btn_rogzit">Rögzít</string>
+    <string name="keszlet">Készlet: </string>
+    <string name="sikeresrogzites">A rögzítés sikerült</string>
+    <string name="hibasrogzites">A rögzítés NEM sikerült</string>
+    <string name="title_activity_kinalat">Kínálat</string>
+    <string name="email_send">Email küldés</string>
+    <string name="title_activity_send_mail">Üzenetküldés</string>
+    <string name="uzenet">Üzenet</string>
+    <string name="uzenet_body">Kedves XXXYYY!\n\n A SWAP rendszerben láttam, hogy kínálsz egy PPPPP -t.\n Én ezt szívesen elfogadnám.\n\n Üdvözlettel, \n ZZZZZ </string>
+    <string name="title_activity_messages">Üzenetek kezelése</string>
+    <string name="messages_map_in">Beérkezett üzenetek</string>
+    <string name="messages_map_out">Küldött üzenetek</string>
+    <string name="messages_map_flow">Üzenetek idősoros nézetben</string>
+    <string name="messages_map_trash_in">Törölt beérkezett</string>
+    <string name="messages_map_trash_out">Törölt küldött</string>
+    <string name="messages_send_ok">Üzenetét elküldtük</string>
+    <string name="messages_send_error">HIBÁS Üzenet küldés</string>
+    <string name="messages_notification_read">Olvasatlan üzenetei vannak!</string>
+    <string name="sikerestorles">A törlés sikerült</string>
+    <string name="hibastorles">A törlés NEM sikerült</string>
+    <string name="messages_valasz">Válasz XXXYYY részére</string>
+    <string name="internet_hiba">Internet kapcsolat szükséges a működéshez!</string>
 
 </resources>

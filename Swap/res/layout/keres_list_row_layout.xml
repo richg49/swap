@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:minHeight="65dp"
+    android:orientation="vertical"
+    android:padding="5dip" >
+
+    <ImageButton
+        android:id="@+id/keres_button"
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/description_zoom_touch_close"
+        android:onClick="onClick"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/keres_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
+    <CheckBox
+        android:id="@+id/keres_valaszt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:textSize="12sp" />
+
+</LinearLayout>

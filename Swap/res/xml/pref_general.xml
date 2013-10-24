@@ -1,0 +1,46 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:capitalize="none"
+        android:inputType="textEmailAddress"
+        android:key="prefemail"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/email" />
+    <EditTextPreference
+        android:key="prefrname"
+        android:title="@string/rname" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:inputType="textCapWords"
+        android:key="prefname"
+        android:title="@string/name" />
+
+    <PreferenceCategory android:title="@string/address" >
+        <EditTextPreference
+            android:capitalize="none"
+            android:inputType="number"
+            android:key="prefaddress_postcode"
+            android:title="@string/textCapWords" />
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="textCapWords"
+            android:key="prefaddress_city"
+            android:title="@string/address_city" />
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="textCapWords"
+            android:key="prefaddress_streat"
+            android:title="@string/address_streat" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/mappositiom" >
+        <EditTextPreference
+            android:key="preflong"
+            android:title="@string/maplong" />
+        <EditTextPreference
+            android:key="preflat"
+            android:title="@string/maplat" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

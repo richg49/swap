@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_default_backg"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".VerifyBuyActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:listSelector="@drawable/list_selector_flatcolor" >
+
+        <Button
+            android:id="@+id/btn_elofizet_v"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@color/btn_backg"
+            android:text="@string/btn_elofizet"
+            android:textColor="@color/btn_text" />
+
+        <Button
+            android:id="@+id/btn_cancel_v"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@color/btn_backg"
+            android:text="@string/btn_kilep"
+            android:textColor="@color/btn_text" />
+    </LinearLayout>
+
+</LinearLayout>

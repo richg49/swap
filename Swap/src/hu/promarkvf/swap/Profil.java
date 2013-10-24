@@ -45,6 +45,7 @@ public class Profil {
 		this.gps_long = gps_long;
 		this.language = language;
 		this.activation = "N";
+		this.id = 0;
 	}
 	
 	protected Profil() {
@@ -63,6 +64,7 @@ public class Profil {
 		this.gps_long = 0f;
 		this.language = "HU";
 		this.activation = "N";
+		this.id = 0;
 	}
 	
 	public boolean SaveDb() {

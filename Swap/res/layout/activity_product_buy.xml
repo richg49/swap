@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_default_backg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ProductBuyActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:listSelector="@drawable/list_selector_flatcolor" >
+
+        <Button
+            android:id="@+id/btn_elofizet"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_elofizet" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="@string/btn_kilep" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/pgb_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector_flatcolor" />
+
+</LinearLayout>

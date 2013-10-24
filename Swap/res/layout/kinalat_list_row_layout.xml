@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:minHeight="65dp"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <TextView
+        android:id="@+id/kinalat_nev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="false"
+        android:layout_centerVertical="true"
+        android:textColor="@drawable/list_item_text_selector"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <ImageButton
+        android:id="@+id/kinalat_imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:contentDescription="@string/email_send"
+        android:onClick="onClick"
+        android:src="@android:drawable/sym_action_email" />
+
+</RelativeLayout>

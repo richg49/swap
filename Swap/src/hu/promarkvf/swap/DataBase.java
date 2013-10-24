@@ -27,6 +27,11 @@ public class DataBase extends AsyncTask<String, Integer, String> {
 		this.context = context;
 	}
 	
+	public DataBase() {
+		super();
+		this.context = null;
+	}
+	
 	@Override
 	protected String doInBackground(String... params) {
 		HttpClient httpClient = null;

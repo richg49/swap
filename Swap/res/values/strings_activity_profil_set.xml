@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="title_activity_profil_set">Profil</string>
+    <string name="pref_header_general">Alap</string>
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact based on your message history</string>
+</resources>

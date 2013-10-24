@@ -3,7 +3,7 @@
     android:id="@+id/LinearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:background="@color/color_default_backg"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -17,28 +17,34 @@
         android:gravity="bottom" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/kinalat_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvProfilStatus" />
+            android:text="@string/tvProfilStatus"
+            android:textColor="@color/color_default_text_2"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tVProfil"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_default_text_1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center" >
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/mess_ch_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvgyujtemenyek" />
+            android:text="@string/tvgyujtemenyek"
+            android:textColor="@color/color_default_text_2" />
 
         <Spinner
             android:id="@+id/spinner_gyujt"
@@ -51,40 +57,53 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="30dp" >
+        android:orientation="vertical"
+        android:paddingTop="10dp" >
 
         <Button
-            android:id="@+id/btn_keres"
-            android:layout_width="120dp"
+            android:id="@+id/swap_kezel"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_keres" />
+            android:layout_margin="5dp"
+            android:background="@color/btn_backg"
+            android:padding="10dp"
+            android:text="@string/btn_kezel"
+            android:textColor="@color/btn_text" />
 
         <Button
-            android:id="@+id/btn_kinal"
-            android:layout_width="120dp"
+            android:id="@+id/swap_uzenetek"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="@string/btn_kinal" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="30dp" >
+            android:layout_margin="5dp"
+            android:background="@color/btn_backg"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/uzenet"
+            android:textColor="@color/btn_text" />
 
         <Button
-            android:id="@+id/btn_partner"
-            android:layout_width="120dp"
+            android:id="@+id/swap_gyujtemeny"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_partner" />
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/btn_backg"
+            android:padding="10dp"
+            android:text="@string/product_buy"
+            android:textColor="@color/btn_text" />
 
         <Button
-            android:id="@+id/btn_kivan"
-            android:layout_width="120dp"
+            android:id="@+id/swap_profil"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="@string/btn_kivansag" />
+            android:layout_margin="5dp"
+            android:background="@color/btn_backg"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/btn_profil"
+            android:textColor="@color/btn_text" />
     </LinearLayout>
 
 </LinearLayout>
